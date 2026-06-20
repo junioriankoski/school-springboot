@@ -33,6 +33,7 @@ public class DataLoader implements CommandLineRunner {
         livroRepository.save(new Livro("O Príncipe", "Nicolau Maquiavel"));
 
         professorRepository.save(new Professor("Vitor", "Data Cience", "vitor@gmail.com"));
-        professorRepository.save(new Professor("Julio", "Redes", "julio@gmail.com"));
+        professorRepository.save(new Professor("Julio", "Computer Networks", "julio@gmail.com"));
+        professorRepository.save(new Professor("Roberto","Ética","roberto@gmai.com"));
     }
 }
