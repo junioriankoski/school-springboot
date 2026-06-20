@@ -2,8 +2,9 @@ package com.example.escola.livro;
 
 import org.springframework.stereotype.Service;
 
+import com.example.escola.exception.RecursosNaoEncontradosException;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LivroService {
@@ -25,13 +26,15 @@ public class LivroService {
             .toList();
     }
 
-    public Optional<LivroResponse> buscarPorId(Long id) {
-        return repository.findById(id)
-            .map(livro -> new LivroResponse(
-                livro.getId(),
-                livro.getTitulo(),
-                livro.getAutor()
-            ));
+    public LivroResponse buscarPorId(Long id) {
+        Livro livro = repository.findById(id)
+            .orElseThrow(() -> new RecursosNaoEncontradosException("Livro não encontrado"));
+
+        return new LivroResponse(
+            livro.getId(),
+            livro.getTitulo(),
+            livro.getAutor()
+        );
     }
 
     public LivroResponse salvar(LivroRequest livro) {
@@ -44,18 +47,18 @@ public class LivroService {
         );
     }
 
-    public Optional<LivroResponse> atualizarLivro(LivroRequest livroAtualizado, Long id) {
-        return repository.findById(id)
-            .map(livro -> {
+    public LivroResponse atualizarLivro(LivroRequest livroAtualizado, Long id) {
+        Livro livro = repository.findById(id)
+            .orElseThrow(() -> new RecursosNaoEncontradosException("Livro não encontrado"));
                 livro.setTitulo(livroAtualizado.getTitulo());
                 livro.setAutor(livroAtualizado.getAutor());
                 Livro salvo = repository.save(livro);
-                return new LivroResponse(
-                    salvo.getId(), 
-                    salvo.getTitulo(), 
-                    salvo.getAutor());
-            });
-    }
+            return new LivroResponse(
+                salvo.getId(), 
+                salvo.getTitulo(), 
+                salvo.getAutor()
+            );
+        }
 
     public boolean deletar(Long id) {
         if (!repository.existsById(id)) {

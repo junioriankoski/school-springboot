@@ -28,9 +28,7 @@ public class ProfessorController {
     
     @GetMapping("/professores/{id}")
         public ResponseEntity<ProfessorResponse> getProfessores(@PathVariable Long id) {
-            return service.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+            return ResponseEntity.ok(service.buscarPorId(id));
         }
     
     @PostMapping("/professores")
@@ -40,9 +38,7 @@ public class ProfessorController {
 
     @PutMapping("/professores/{id}")
         public ResponseEntity<ProfessorResponse> atualizarProfessor(@RequestBody ProfessorRequest professorAtualizado, @PathVariable Long id) {
-            return service.atualizarProfessor(professorAtualizado, id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+            return ResponseEntity.ok(service.atualizarProfessor(professorAtualizado, id));
         }
 
     @DeleteMapping("/professores/{id}")

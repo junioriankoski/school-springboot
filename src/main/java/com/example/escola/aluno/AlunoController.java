@@ -27,9 +27,7 @@ public class AlunoController {
 
     @GetMapping("/alunos/{id}")
     public ResponseEntity<AlunoResponse> getAluno(@PathVariable Long id) {
-        return service.buscarPorId(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(service.buscarPorId(id));
     }
 
     @GetMapping("/alunos/existe/{id}")
@@ -44,9 +42,7 @@ public class AlunoController {
 
     @PutMapping("/alunos/{id}")
     public ResponseEntity<AlunoResponse> atualizarAluno(@RequestBody AlunoRequest alunoAtualizado, @PathVariable Long id) {
-        return service.atualizarAluno(alunoAtualizado, id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(service.atualizarAluno(alunoAtualizado, id));
     }
     
     @DeleteMapping("/alunos/{id}")

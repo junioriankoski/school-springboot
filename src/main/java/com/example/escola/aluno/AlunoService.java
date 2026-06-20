@@ -2,8 +2,9 @@ package com.example.escola.aluno;
 
 import org.springframework.stereotype.Service;
 
+import com.example.escola.exception.RecursosNaoEncontradosException;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AlunoService {
@@ -29,28 +30,31 @@ public class AlunoService {
             .toList();
     }
 
-    public Optional<AlunoResponse> buscarPorId(Long id) {
-        return repository.findById(id)
-            .map(aluno -> new AlunoResponse(
-                aluno.getId(),
-                aluno.getNome(),
-                aluno.getCurso()
-            ));
+    public AlunoResponse buscarPorId(Long id) {
+       Aluno aluno = repository.findById(id)
+            .orElseThrow(() -> new RecursosNaoEncontradosException("Aluno não encontrado"));
+
+        return new AlunoResponse(
+            aluno.getId(),
+            aluno.getNome(),
+            aluno.getCurso()
+        );
     }
 
-    public Optional<AlunoResponse> atualizarAluno(AlunoRequest alunoAtualizado, Long id) {
-        return repository.findById(id)
-            .map(aluno -> {
-                aluno.setNome(alunoAtualizado.getNome());
-                aluno.setIdade(alunoAtualizado.getIdade());
-                aluno.setCurso(alunoAtualizado.getCurso());
-                Aluno salvo = repository.save(aluno);
-                return new AlunoResponse(
-                    salvo.getId(),
-                    salvo.getNome(),
-                    salvo.getCurso());
-            });
+    public AlunoResponse atualizarAluno(AlunoRequest alunoAtualizado, Long id) {
+        Aluno aluno = repository.findById(id)
+           .orElseThrow(() -> new RecursosNaoEncontradosException("Aluno não encontrado"));
+        aluno.setNome(alunoAtualizado.getNome());
+        aluno.setIdade(alunoAtualizado.getIdade());
+        aluno.setCurso(alunoAtualizado.getCurso());
+        Aluno salvo = repository.save(aluno);
+        return new AlunoResponse(
+            salvo.getId(),
+            salvo.getNome(),
+            salvo.getCurso()
+        );
     }
+    
        
     public AlunoResponse salvar(AlunoRequest aluno) {
         Aluno novoAluno = new Aluno(aluno.getNome(), aluno.getIdade(), aluno.getCurso());

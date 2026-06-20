@@ -26,9 +26,7 @@ public class LivroController {
 
     @GetMapping("/livros/{id}")
     public ResponseEntity<LivroResponse> getLivros(@PathVariable Long id) {
-        return service.buscarPorId(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(service.buscarPorId(id));
     }
 
     @PostMapping("/livros")
@@ -38,9 +36,7 @@ public class LivroController {
 
     @PutMapping("/livros/{id}")
     public ResponseEntity<LivroResponse> atualizarLivro(@RequestBody LivroRequest livroAtualizado, @PathVariable Long id) {
-        return service.atualizarLivro(livroAtualizado, id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(service.atualizarLivro(livroAtualizado, id));
     }
 
     @DeleteMapping("/livros/{id}")
