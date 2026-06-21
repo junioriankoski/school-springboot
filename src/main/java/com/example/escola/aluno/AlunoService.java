@@ -29,7 +29,7 @@ public class AlunoService {
                 aluno.getId(),
                 aluno.getNome(),
                 aluno.getCurso(),
-                aluno.getProfessor().getNome()
+                aluno.getProfessor() != null ? aluno.getProfessor().getNome() : null
             ))
             .toList();
     }
@@ -42,7 +42,7 @@ public class AlunoService {
             aluno.getId(),
             aluno.getNome(),
             aluno.getCurso(),
-            aluno.getProfessor().getNome()
+            aluno.getProfessor() != null ? aluno.getProfessor().getNome() : null
         );
     }
 
@@ -60,7 +60,7 @@ public class AlunoService {
             salvo.getId(),
             salvo.getNome(),
             salvo.getCurso(),
-            salvo.getProfessor().getNome()
+            salvo.getProfessor() != null ? salvo.getProfessor().getNome() : null
         );
     }
     
@@ -75,7 +75,7 @@ public class AlunoService {
             salvo.getId(),
             salvo.getNome(),
             salvo.getCurso(),
-            salvo.getProfessor().getNome()
+            salvo.getProfessor() != null ? salvo.getProfessor().getNome() : null
         );
     }
 
