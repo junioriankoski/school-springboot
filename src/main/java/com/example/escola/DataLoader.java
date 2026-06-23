@@ -25,6 +25,9 @@ public class DataLoader implements CommandLineRunner {
     }
       @Override
     public void run(String... args) {
+        if(professorRepository.count()>0) {
+            return;
+        }
         Professor vitor = professorRepository.save(new Professor("Vitor", "Data Cience", "vitor@gmail.com"));
         Professor julio = professorRepository.save(new Professor("Julio", "Computer Networks", "julio@gmail.com"));
         Professor roberto = professorRepository.save(new Professor("Roberto","Ética","roberto@gmai.com"));
